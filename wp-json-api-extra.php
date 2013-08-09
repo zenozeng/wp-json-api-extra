@@ -2,8 +2,8 @@
 /*
   Plugin Name: JSON API Extra
   Plugin URI: https://github.com/zenozeng/wp-json-api-extra/
-  Description: Yet Some ugly but useful API for Wordpress
-  Version: 0.0.2
+  Description: Yet some ugly but useful API for Wordpress
+  Version: 0.0.3
   Author: Zeno Zeng
   Author: http://zenoes.com
   License: GNU General Public License Version 3
@@ -20,6 +20,12 @@ class JSON_API_Extra {
     static function get_last_modified() {
         return get_option('json_api_extra_site_last_modified');
     }
+    static function get_blog_options() {
+        $arr = array();
+        $arr['blogname'] = get_option('blogname');
+        $arr['blogdescription'] = get_option('blogdescription');
+        return $arr;
+    }
 }
 
 function json_api_extra() {
@@ -27,11 +33,12 @@ function json_api_extra() {
     if(isset($_GET) && isset($_GET['jsonextra'])) {
         switch ($_GET['jsonextra']) {
             
-          case 'lastModified':
-              # the timestamp of the last modifition of this site
+          case 'lastModified': # the timestamp of the last modifition of this site
               $data = array('lastModified' => JSON_API_Extra::get_last_modified());
               break;
-
+          case 'blogOptions':
+              $data = JSON_API_Extra::get_blog_options();
+              break;
         }
         $json = json_encode($data);
         if (isset($_GET['callback'])) {
