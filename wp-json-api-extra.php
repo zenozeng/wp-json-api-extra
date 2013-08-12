@@ -3,7 +3,7 @@
   Plugin Name: JSON API Extra
   Plugin URI: https://github.com/zenozeng/wp-json-api-extra/
   Description: Yet some ugly but useful API for Wordpress
-  Version: 0.0.3
+  Version: 0.0.4
   Author: Zeno Zeng
   Author: http://zenoes.com
   License: GNU General Public License Version 3
@@ -56,7 +56,18 @@ add_action('init', 'json_api_extra');
 register_activation_hook(__FILE__, array('JSON_API_Extra', 'install'));
 
 // http://codex.wordpress.org/Plugin_API/Action_Reference # Post, Page, Attachment, and Category Actions (Admin) 
-$hooks = array('create_category', 'delete_category', 'trashed_post', 'deleted_post', 'edit_category', 'save_post');
+$hooks = array('create_category',
+               'delete_category',
+               'trashed_post',
+               'deleted_post',
+               'edit_category',
+               'save_post',
+               'comment_post',
+               'edit_comment',
+               'delete_comment',
+               'trash_comment',
+               'update_option_blogname',
+               'update_option_blogdescription');
 foreach($hooks as $hook) {
     add_action($hook, 'JSON_API_Extra::update_last_modified');
 }
