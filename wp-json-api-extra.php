@@ -3,7 +3,7 @@
 Plugin Name: JSON API Extra
 Plugin URI: https://github.com/zenozeng/wp-json-api-extra/
 Description: Yet some ugly but useful API for Wordpress
-Version: 0.0.5
+Version: 0.0.6
 Author: Zeno Zeng
 Author: http://zenoes.com
 License: GNU General Public License Version 3
@@ -39,7 +39,21 @@ function json_api_extra() {
                 $data = JSON_API_Extra::get_blog_options();
                 break;
             case 'categories':
-                $data = get_categories();
+                $args = array(
+                    'type'                     => 'post',
+                    'child_of'                 => 0,
+                    'parent'                   => '',
+                    'orderby'                  => 'name',
+                    'order'                    => 'ASC',
+                    'hide_empty'               => 0,
+                    'hierarchical'             => 1,
+                    'exclude'                  => '',
+                    'include'                  => '',
+                    'number'                   => '',
+                    'taxonomy'                 => 'category',
+                    'pad_counts'               => false
+                );
+                $data = get_categories($args);
                 break;
         }
         $json = json_encode($data);
